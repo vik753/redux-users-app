@@ -1,14 +1,30 @@
-const initialState = [{
-  id: 1,
-  title: 'First todo',
-  text: 'Some text for todo1',
-  done: false,
-  created: '03/28/2022'
-}, {id: 2, title: 'Second todo', text: 'Some text for todo2', done: true, created: '04/01/2022'}]
+import {actionTypes} from "./todoActions";
 
+const noError = {
+  isError: false,
+  errorMessage: ''
+};
+
+const initialState = {
+  todos: [],
+  error: noError
+};
 
 export const todosReducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.GET_TODOS:
+      return {
+        todos: action.payload,
+        error: noError
+      };
+    case actionTypes.TOOK_ERROR:
+      return {
+        ...state,
+        error: {
+          isError: true,
+          errorMessage: action.payload
+        }
+      }
     default:
       return state;
   }
